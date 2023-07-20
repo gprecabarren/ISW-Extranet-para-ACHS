@@ -19,9 +19,9 @@ const { handleError } = require("../utils/errorHandler");
  */
 async function getExams() {
   try {
-    return await Exam.find();
+    return await Exam.find();  //con mongo busca los examenes, sin parametros devuelve todos los examenes de la bdd
   } catch (error) {
-    handleError(error, "exam.service -> getExams");
+    handleError(error, "exam.service -> getExams"); //retorna un error diciendo que hay un error en esta función getExams()
   }
 }
 
@@ -61,9 +61,9 @@ async function getExamById(id) {
  * @param exam
  * @returns {Promise<Exam|null>}
  */
-async function updateExam(id, exam) {
-  try {
-    const updatedExam = await Exam.findByIdAndUpdate(id, exam, { new: true });
+async function updateExam(id, exam) { //son los id de parametros URL y exam del body JSON
+  try { //Si el objeto JSON de la peticion es válido como un esquema de modelo, lo actualiza<
+    const updatedExam = await Exam.findByIdAndUpdate(id, exam, { new: true })
     return updatedExam;
   } catch (error) {
     handleError(error, "exam.service -> updateExam");
@@ -100,12 +100,12 @@ async function addExamToUser(userId, examId) {
 
 async function updateExamStatus(userId, examId, status) {
   try {
-    const user = await User.findById(userId);
+    const user = await User.findById(userId)
 
     if (!user) {
       throw new Error('No se encontró el usuario');
     }
-    console.log(user)
+    //console.log(user)
 
     const userExam = user.exams.find(exam => exam._id.toString() === examId);
 
@@ -114,16 +114,14 @@ async function updateExamStatus(userId, examId, status) {
     }
 
     userExam.status = status;
+    console.log(status);
     await user.save();
-
+    //await userExam.save();
     return userExam;
   } catch (error) {
     handleError(error, 'exam.service -> updateExamStatus');
   }
 }
-
-
-
 
 
 

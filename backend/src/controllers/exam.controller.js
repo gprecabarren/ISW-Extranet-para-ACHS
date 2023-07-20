@@ -1,5 +1,5 @@
 "use strict";
-
+//Se importan los modelos
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const ExamService = require("../services/exam.service");
 const UserService = require("../services/user.service");
@@ -16,11 +16,12 @@ const { handleError } = require("../utils/errorHandler");
  * @name getExams
  * @description Obtiene todos los exámenes
  * @param req {Request}
- * @param res {Response}
+  * @param res {Response}
  */
-async function getExams(req, res) {
+async function getExams(req, res) { //recibe req y res desde el cliente
   try {
     const exams = await ExamService.getExams();
+    // Se llama a la función getExams del módulo ExamService para obtener todos los exámenes.
     exams.length === 0
       ? respondSuccess(req, res, 204)
       : respondSuccess(req, res, 200, exams);
@@ -50,13 +51,13 @@ async function createExam(req, res) {
     // Si no existe, crear un nuevo tipo de examen
     if (!examType) {
       examType = new ExamType({ nombre: examData.examType });
-      await examType.save();
+      await examType.save()
     }
 
     // Asignar el ID del tipo de examen al examen
-    examData.examType = examType._id;
+    examData.examType = examType._id
 
-    const newExam = await ExamService.createExam(examData); // Llamar a la función createExam del servicio de exámenes
+    const newExam = await ExamService.createExam(examData) // Llamar a la función createExam del servicio de exámenes
 
     // Si newExam es null, significa que hubo un error al crear el examen
     if (newExam === null) {
@@ -65,13 +66,13 @@ async function createExam(req, res) {
         res,
         500,
         "No se pudo crear el examen"
-      );
+      )
     } else {
-      respondSuccess(req, res, 201, newExam);
+      respondSuccess(req, res, 201, newExam) //El código de respuesta de estado de éxito creado HTTP 201 Created
     }
   } catch (error) {
-    handleError(error, "exam.controller -> createExam");
-    respondError(req, res, 500, "No se pudo crear el examen");
+    handleError(error, "exam.controller -> createExam")
+    respondError(req, res, 500, "No se pudo crear el examen")
   }
 }
 
@@ -84,9 +85,9 @@ async function createExam(req, res) {
  */
 async function getExamById(req, res) {
   try {
-    const { id } = req.params;
-    const exam = await ExamService.getExamById(id);
-    exam === null
+    const { id } = req.params // obtiene parametros desde la URL, obtiene id desde el middleware
+    const exam = await ExamService.getExamById(id); //obtiene un examen con la id
+    exam === null //si es nula responde
       ? respondError(
           req,
           res,
@@ -95,7 +96,7 @@ async function getExamById(req, res) {
           "Not Found",
           { message: "Verifique el ID ingresado" },
         )
-      : respondSuccess(req, res, 200, exam);
+      : respondSuccess(req, res, 200, exam); //si no es nulo responde con 200 OK
   } catch (error) {
     handleError(error, "exam.controller -> getExamById");
     respondError(req, res, 500, "No se pudo obtener el examen");
@@ -111,8 +112,8 @@ async function getExamById(req, res) {
 async function updateExam(req, res) {
   try {
     const { id } = req.params;
-    const exam = await ExamService.updateExam(id, req.body);
-    exam === null
+    const exam = await ExamService.updateExam(id, req.body); //utiliza el servicio de examen
+    exam === null //Si no lo encuentra retorna código 404
       ? respondError(
           req,
           res,
@@ -121,10 +122,10 @@ async function updateExam(req, res) {
           "Not Found",
           { message: "Verifique el ID ingresado" },
         )
-      : respondSuccess(req, res, 200, exam);
+      : respondSuccess(req, res, 200, exam); //Si lo encuentra retorna una respuesta con el examen actualizado
   } catch (error) {
     handleError(error, "exam.controller -> updateExam");
-    respondError(req, res, 500, "No se pudo actualizar el examen");
+    respondError(req, res, 500, "No se pudo actualizar el examen"); 
   }
 }
 

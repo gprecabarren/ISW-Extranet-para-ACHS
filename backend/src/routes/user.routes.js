@@ -16,7 +16,7 @@ router.post("/", authoMiddleware.isAdmin, usuarioController.createUser);
 router.get("/:id", usuarioController.getUserById);
 router.put("/:id", authoMiddleware.isAdmin, usuarioController.updateUser);
 router.delete("/:id", authoMiddleware.isAdmin, usuarioController.deleteUser);
-router.put('/users/:userId/exams', usuarioController.addExamsToUser);
+//router.put('/users/:userId/exams', usuarioController.addExamsToUser);
 
 // Exporta el enrutador
 module.exports = router;
