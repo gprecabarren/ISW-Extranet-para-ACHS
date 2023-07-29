@@ -125,34 +125,6 @@ async function deleteUser(req, res) {
   }
 }
 
-/**
- * @name addExamsToUser
- * @description Añade exámenes a un usuario
- * @param req {Request}
- * @param res {Response}
- */
-async function addExamsToUser(req, res) {
-  try {
-    const { id } = req.params;
-    const { exams } = req.body;
-
-    const user = await UserService.addExamsToUser(id, exams);
-    user === null
-      ? respondError(
-          req,
-          res,
-          404,
-          "No se encontró el usuario solicitado",
-          "Not Found",
-          { message: "Verifique el id ingresado" },
-        )
-      : respondSuccess(req, res, 200, user);
-  } catch (error) {
-    handleError(error, "user.controller -> addExamsToUser");
-    respondError(req, res, 500, "No se pudo añadir exámenes al usuario");
-  }
-}
-
 async function getUsersWithApprovedExam(examId) {
   try {
     return await User.find({ exams: { $elemMatch: { examId, status: "approved" } } });
@@ -160,6 +132,34 @@ async function getUsersWithApprovedExam(examId) {
     handleError(error, "user.service -> getUsersWithApprovedExam");
   }
 }
+
+/**
+ * @name addExamToUser
+ * @description Agrega un examen al usuario específico
+ * @param req {Request}
+ * @param res {Response}
+ */
+async function addExamToUser(req, res) {
+  const userId = req.params.id;
+  const examData = req.body;
+
+  try {
+    const updatedUser = await UserService.addExamToUser(userId, examData);
+
+    if (!updatedUser) {
+      return respondError(req, res, 404, "Usuario no encontrado");
+    }
+
+    respondSuccess(req, res, 200, updatedUser);
+  } catch (error) {
+    handleError(error, "user.controller -> addExamToUser");
+    respondError(req, res, 500, "No se pudo agregar el examen al usuario");
+  }
+}
+
+module.exports = {
+  addExamToUser,
+};
 
 module.exports = {
   getUsersWithApprovedExam, // Agrega esta línea para exportar la función
@@ -172,5 +172,5 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
-  addExamsToUser,
+  addExamToUser,
 };

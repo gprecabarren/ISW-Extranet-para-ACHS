@@ -1,6 +1,6 @@
 import axios from '@/data/apiRoot';
 
-export const getTasks = async (token) => {
+export const getUsers = async (token) => {
   try {
     const config = {
       headers: {
@@ -14,7 +14,7 @@ export const getTasks = async (token) => {
   }
 };
 
-export const getTask = async (id) => {
+export const getUser = async (id) => {
   try {
     const res = await axios.get(`/users/${id}`);
     console.log("entro data:"+res.data)
@@ -24,25 +24,25 @@ export const getTask = async (id) => {
   }
 };
 
-export const createTask = async (task) => {
+export const createUser = async (user) => {
   try {
-    const res = await axios.post('/users', task);
+    const res = await axios.post('/users', user);
     return res.status === 200 ? res.data : { success: false, data: [] };
   } catch (err) {
     console.log(err);
   }
 };
 
-export const updateTask = async (id, task) => {
+export const updateUser = async (id, user) => {
   try {
-    const res = await axios.put(`/users/${id}`, task);
+    const res = await axios.put(`/users/${id}`, user);
     return res.status === 200 ? res.data : { success: false, data: [] };
   } catch (err) {
     console.log(err);
   }
 };
 
-export const deleteTask = async (id) => {
+export const deleteUser = async (id) => {
   try {
     const res = await axios.delete(`/users/${id}`);
     return res.status === 200 ? res.data : { success: false, data: [] };

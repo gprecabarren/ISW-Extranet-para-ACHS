@@ -108,10 +108,26 @@ async function deleteUser(id) {
   }
 }
 
+async function addExamToUser(userId, examData) {
+  try {
+    
+    const user = await User.findById(userId) // Encuentra al usuario por su ID
+    if (!user) return null; // Retorna null si el usuario no existe
+    const fechaActual = new Date();
+    examData.FechaSubida = fechaActual.toISOString();
+    user.exams.push(examData) // Agrega el examen al array de exámenes del usuario
+    const updatedUser = await user.save()  // Guarda los cambios en la base de datos
+    return updatedUser; // Retorna el usuario actualizado con el nuevo examen
+  } catch (error) {
+    handleError(error, "user.service -> addExamToUser"); // Maneja cualquier error ocurrido
+  }
+}
+
 module.exports = {
   getUsers,
   createUser,
   getUserById,
   updateUser,
   deleteUser,
+  addExamToUser,
 };

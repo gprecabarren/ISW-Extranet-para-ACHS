@@ -21,8 +21,22 @@ const userSchema = new mongoose.Schema({
   ],
   exams: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Exam",
+      ExamenNombre: {
+        type: String,
+        required: true,
+      },
+      FechaSubida: {
+        type: String,
+        required: true,
+      },
+      Tipo: {
+        type: String,
+        required: true,
+      },
+      Estado: {
+        type: String,
+        required: true,
+      },
     },
   ],
 });
