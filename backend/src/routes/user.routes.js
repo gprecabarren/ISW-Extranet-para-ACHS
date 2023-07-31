@@ -17,6 +17,11 @@ router.get("/:id", usuarioController.getUserById);
 router.put("/:id", authoMiddleware.isAdmin, usuarioController.updateUser);
 router.delete("/:id",  usuarioController.deleteUser);
 router.post("/:id/exams", authoMiddleware.isAdmin,usuarioController.addExamToUser);
+
+router.post("/register", validateSchema(registerSchema), register);
+router.post("/login", validateSchema(loginSchema), login);
+router.get("/verify", verifyToken);
+router.post("/logout", verifyToken, logout);
 //router.put('/users/:userId/exams', usuarioController.addExamsToUser);
 
 // Exporta el enrutador

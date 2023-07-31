@@ -1,33 +1,29 @@
 {
-  "name": "api-node",
+  "name": "mern-tasks",
   "version": "1.0.0",
-  "description": "API con Node",
-  "main": "src/server.js",
+  "description": "A MERN CRUD with Authentication",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon src/server.js"
+    "dev": "cross-env NODE_ENV=development nodemon src/index.js --ignore client",
+    "start": "cross-env NODE_ENV=production node src/index.js"
   },
-  "keywords": [
-    "node",
-    "backend",
-    "http"
-  ],
-  "author": "Camilo saez",
-  "license": "MIT",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "joi": "^17.9.1",
     "jsonwebtoken": "^9.0.0",
-    "mongodb": "^5.5.0",
-    "mongoose": "^7.0.3",
-    "morgan": "^1.10.0"
+    "mongoose": "^7.2.2",
+    "morgan": "^1.10.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
-    "eslint": "^8.38.0",
-    "eslint-config-google": "^0.14.0",
-    "jsdoc": "^4.0.2",
-    "nodemon": "^2.0.22",
-    "prettier": "^2.8.7"
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.1.3",
+    "nodemon": "^2.0.22"
   }
 }
