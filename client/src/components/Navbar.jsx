@@ -31,9 +31,6 @@ export function Navbar() {
             <li>
               <ButtonLink to="/login">Iniciar sesión</ButtonLink>
             </li>
-            <li>
-              <ButtonLink to="/register">Registrarse</ButtonLink>
-            </li>
           </>
         )}
       </ul>
